@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>피를 멈춰라! 혈소판 수비대 | 어게인 실험과학 수학학원</title>
+<meta name="description" content="터치로 알아보는 지혈 · 혈소판 · 딱지 · 지혈대">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6fbff; --ice:#e3f3fd; --ice2:#bfe4fb; --blue:#3a9ae0; --blue-d:#2476b8; --cloud:#ffffff;
+  --org:#ff8a1f; --org-d:#c85f00; --org-s:#fff0dd;
+  --mint:#dcf5ea; --mint2:#8fdcb8; --mint-d:#2f9e6e;
+  --red:#d9363e; --red-d:#a3212b; --red-s:#ffe6e6;
+  --ink:#33414f; --sub:#6c7a8a; --line:#d3e7f5;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;color:var(--ink);font-family:"Noto Sans KR",system-ui,sans-serif;font-weight:500}
+body{min-height:100vh;display:flex;flex-direction:column;-webkit-user-select:none;user-select:none;overflow-x:hidden;
+  background:linear-gradient(90deg,rgba(58,154,224,.06) 1px,transparent 1px) 0 0/34px 34px,linear-gradient(rgba(58,154,224,.06) 1px,transparent 1px) 0 0/34px 34px,
+  radial-gradient(circle at 0% 0%,#ffe9e6 0 240px,transparent 420px),radial-gradient(circle at 100% 30%,#dff1fd 0 220px,transparent 420px),var(--bg)}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+
+.bbtn{font-family:"Jua",sans-serif;font-size:22px;min-height:62px;min-width:150px;padding:10px 28px;color:#fff;background:var(--blue);border-radius:999px;
+  box-shadow:inset 0 -6px 0 rgba(0,0,0,.12),0 5px 0 var(--blue-d);word-break:keep-all}
+.bbtn:active{transform:translateY(3px)}
+.bbtn:disabled{opacity:.35;cursor:default}
+.bbtn.org{background:var(--org);box-shadow:inset 0 -6px 0 rgba(0,0,0,.1),0 5px 0 var(--org-d)}
+.bbtn.white{background:#fff;color:var(--blue-d);box-shadow:inset 0 -6px 0 rgba(0,0,0,.05),0 5px 0 var(--line)}
+.bbtn.pulse{animation:pulse 1.2s infinite}
+.bbtn[hidden]{display:none}
+
+header{position:sticky;top:0;z-index:30;background:var(--cloud);box-shadow:0 3px 0 var(--line);padding:10px 16px}
+.head-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.logo{width:52px;height:52px;flex:none}
+.titles{flex:1;min-width:0}
+.titles .brand{font-family:"Jua",sans-serif;font-size:16px;color:var(--sub)}
+.titles h1{margin:0;font-family:"Jua",sans-serif;font-weight:400;font-size:clamp(22px,4vw,34px);color:var(--red-d);line-height:1.15;word-break:keep-all}
+.share{min-width:0;font-size:18px;min-height:54px;padding:8px 22px;display:flex;align-items:center;gap:6px;flex:none}
+
+nav{max-width:1100px;width:100%;margin:14px auto 0;padding:0 16px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.tab{position:relative;min-height:64px;border-radius:20px;background:#fff;font-family:"Jua",sans-serif;font-size:clamp(15px,1.9vw,19px);line-height:1.2;padding:6px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:3px solid transparent;box-shadow:0 3px 0 var(--line);word-break:keep-all;text-align:center}
+.tab .n{width:24px;height:24px;border-radius:50%;background:var(--ice2);color:var(--blue-d);font-size:14px;display:grid;place-items:center}
+.tab.on{background:var(--org-s);border-color:var(--org)}
+.tab.on .n{background:var(--org);color:#fff}
+.tab .star{position:absolute;top:-10px;right:-4px;font-size:22px;display:none}
+.tab.done .star{display:block;animation:pop .5s}
+
+main{flex:1;max-width:1100px;width:100%;margin:0 auto;padding:16px}
+.panel{display:none;animation:fadein .3s}
+.panel.on{display:block}
+.coach{display:flex;align-items:flex-end;gap:10px;margin:4px 0 12px}
+.coach svg{width:64px;height:64px;flex:none;animation:float 2.4s ease-in-out infinite}
+.bubble{position:relative;flex:1;min-width:0;background:#fff;border:3px solid var(--ice2);border-radius:22px;padding:12px 18px;font-family:"Jua",sans-serif;
+  font-size:clamp(18px,2.4vw,24px);line-height:1.45;word-break:keep-all;min-height:58px}
+.bubble::before{content:"";position:absolute;left:-14px;bottom:16px;border:10px solid transparent;border-right:14px solid var(--ice2);border-left:0}
+.bubble b{font-weight:400;color:var(--red-d)}
+.bubble b.c{color:var(--blue-d)}
+.bubble.new{animation:pop .4s}
+.card{display:none;margin:16px auto 0;max-width:880px;border-radius:24px;background:var(--mint);border:4px solid var(--mint2);padding:16px 20px;
+  font-family:"Jua",sans-serif;font-size:clamp(19px,2.5vw,24px);text-align:center;line-height:1.5;color:#1f6b4b;word-break:keep-all}
+.card.on{display:block;animation:pop .5s}
+.card .big{display:block;font-size:1.3em;color:#17603f}
+.card .flow{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px;margin:10px 0 4px}
+.card .flow span{background:#fff;border-radius:999px;padding:4px 14px;color:var(--red-d)}
+.stage{position:relative;width:100%;max-width:max(480px,calc((100vh - 310px)*1.7778));margin:0 auto;border-radius:28px;overflow:hidden;touch-action:none;box-shadow:0 6px 0 var(--line);background:#f4fbff}
+.stage>svg{display:block;width:100%;height:auto;touch-action:none}
+.stage.shake{animation:shake .35s}
+.row{display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.cap{position:absolute;left:50%;bottom:4%;transform:translateX(-50%);background:#fff3c4;border:3px solid #ffd666;border-radius:999px;padding:5px 16px;font-family:"Jua",sans-serif;
+  font-size:clamp(13px,2vw,21px);white-space:nowrap;z-index:5;max-width:96%;pointer-events:none}
+.cap.hot{background:var(--red-s);border-color:var(--red);color:var(--red-d)}
+.cap.cold{background:var(--ice);border-color:var(--blue);color:var(--blue-d)}
+.cap[hidden]{display:none}
+.pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.pills span{font-family:"Jua",sans-serif;font-size:clamp(15px,2vw,20px);background:#fff;border:3px solid var(--ice2);border-radius:999px;padding:4px 14px;color:var(--sub)}
+.pills[hidden]{display:none}
+.pills span.ok{background:var(--mint);border-color:var(--mint2);color:#1f6b4b}
+.pills span.warn{background:#fff3c4;border-color:#ffd666;color:#8a6400}
+.zoomtag{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%) scale(.6);opacity:0;pointer-events:none;z-index:6;font-family:"Jua",sans-serif;font-size:clamp(22px,4vw,44px);
+  color:#fff;background:var(--org);border-radius:999px;padding:8px 26px;box-shadow:0 5px 0 var(--org-d);white-space:nowrap}
+.zoomtag.on{animation:ztag 1.4s ease-out forwards}
+.ring{fill:none;stroke:var(--org);stroke-width:8;stroke-dasharray:22 16}
+.tapme{cursor:pointer}
+.beat{animation:beat .45s ease-in-out 2;transform-box:fill-box;transform-origin:center}
+.cmp{display:none;max-width:880px;margin:16px auto 0;background:#fff;border-radius:24px;box-shadow:0 4px 0 var(--line);padding:10px}
+.cmp.on{display:block;animation:pop .5s}
+.cmp svg{display:block;width:100%;height:auto}
+.words{max-width:880px;margin:16px auto 0;display:none;gap:10px}
+.words.on{display:grid;animation:fadein .4s}
+.words div{display:flex;align-items:center;gap:14px;background:#fff;border-radius:20px;padding:10px 18px;box-shadow:0 3px 0 var(--line);font-size:clamp(16px,2.2vw,21px);word-break:keep-all;line-height:1.4}
+.words b{font-family:"Jua",sans-serif;font-weight:400;font-size:1.2em;min-width:4.6em;text-align:center;border-radius:999px;padding:4px 12px;flex:none;background:var(--red-s);color:var(--red-d)}
+.words .d b{background:var(--ice);color:var(--blue-d)}
+.card,.words,.cmp{scroll-margin-top:90px}
+/* O/X 퀴즈 */
+.dots{display:flex;gap:10px;justify-content:center;margin:6px 0 12px}
+.dots i{width:34px;height:34px;border-radius:50%;background:#fff;border:3px solid var(--ice2);font-style:normal;font-family:"Jua",sans-serif;font-size:17px;color:var(--blue-d);display:grid;place-items:center}
+.dots i.now{border-color:var(--org);background:var(--org-s);color:var(--org-d)}
+.dots i.ok{background:var(--mint2);border-color:var(--mint-d);color:#fff}
+.qbox{max-width:880px;margin:0 auto;background:#fff;border:4px solid var(--ice2);border-radius:26px;padding:20px;text-align:center;font-family:"Jua",sans-serif;
+  font-size:clamp(22px,3.4vw,34px);line-height:1.4;word-break:keep-all;min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.qbox small{font-size:.55em;color:var(--sub)}
+.ox{display:flex;gap:24px;justify-content:center;margin-top:18px}
+.oxb{width:clamp(120px,24vw,180px);height:clamp(120px,24vw,180px);border-radius:32px;background:#fff;font-family:"Jua",sans-serif;font-size:clamp(70px,14vw,110px);line-height:1;
+  display:grid;place-items:center;box-shadow:inset 0 -8px 0 rgba(0,0,0,.06),0 6px 0 var(--line)}
+.oxb.o{color:var(--blue);border:5px solid var(--blue)}
+.oxb.x{color:var(--org);border:5px solid var(--org)}
+.oxb:active{transform:translateY(4px)}
+.oxb:disabled{opacity:.4}
+.oxb.pick{background:var(--mint)}
+.qfb{min-height:64px;margin:16px auto 0;max-width:880px;border-radius:20px;padding:10px 16px;font-family:"Jua",sans-serif;font-size:clamp(18px,2.4vw,23px);
+  text-align:center;line-height:1.4;word-break:keep-all;display:flex;align-items:center;justify-content:center;background:#fff;color:var(--sub)}
+.qfb.good{background:var(--mint);color:#1f6b4b;animation:pop .4s}
+.qfb.bad{background:#fff3c4;color:#8a6400;animation:shake .4s}
+
+footer{margin-top:28px;background:var(--blue-d);color:#fff;text-align:center;padding:20px 16px 26px}
+footer .brand{font-family:"Jua",sans-serif;font-size:22px}
+footer .tel{margin-top:4px;font-size:18px}
+.toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,40px);opacity:0;background:var(--ink);color:#fff;font-family:"Jua",sans-serif;font-size:20px;padding:14px 26px;border-radius:999px;z-index:70;transition:.25s;pointer-events:none;white-space:nowrap}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60}
+.fly{position:fixed;bottom:-160px;width:70px;z-index:58;pointer-events:none;animation:upup linear forwards}
+.fly svg{display:block;width:100%;height:auto;animation:sway 1.1s ease-in-out infinite alternate}
+
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}}
+@keyframes pop{0%{transform:scale(.7)}60%{transform:scale(1.07)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{margin-left:0}25%{margin-left:-7px}75%{margin-left:7px}}
+@keyframes float{50%{transform:translateY(-6px) rotate(4deg)}}
+@keyframes pulse{50%{transform:scale(1.06)}}
+@keyframes beat{50%{transform:scale(1.22)}}
+@keyframes upup{to{transform:translateY(calc(-100vh - 320px))}}
+@keyframes sway{from{transform:rotate(-8deg)}to{transform:rotate(8deg)}}
+@keyframes ztag{0%{opacity:0;transform:translate(-50%,-50%) scale(.6)}20%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}75%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.15)}}
+@media (max-width:760px){
+  nav{grid-template-columns:repeat(3,1fr);gap:6px}
+  .tab{font-size:14px;min-height:58px;border-radius:14px}
+  .share{padding:8px 16px}
+  .titles .brand{font-size:13px}
+  .coach svg{width:50px;height:50px}
+  .bbtn{font-size:19px;padding:10px 20px}
+  .cap{position:static;transform:none;display:block;width:fit-content;margin:8px auto;white-space:normal;text-align:center;font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+.slide{display:flex;align-items:center;gap:12px;max-width:880px;margin:16px auto 0;padding:0 6px;font-family:"Jua",sans-serif;font-size:clamp(16px,2.2vw,21px);color:var(--sub)}
+.slide span{flex:none}
+.slide input{flex:1;min-width:0;-webkit-appearance:none;appearance:none;height:20px;border-radius:999px;background:var(--ice2);outline:none;touch-action:pan-y}
+.slide input::-webkit-slider-thumb{-webkit-appearance:none;width:48px;height:48px;border-radius:50%;background:var(--org);border:5px solid #fff;box-shadow:0 3px 0 var(--org-d);cursor:pointer}
+.slide input::-moz-range-thumb{width:40px;height:40px;border-radius:50%;background:var(--org);border:5px solid #fff;box-shadow:0 3px 0 var(--org-d);cursor:pointer}
+.slide input:disabled{opacity:.45}
+</style>
+</head>
+<body>
+<header>
+  <div class="head-in">
+    <svg class="logo" viewBox="-60 -60 120 120" aria-hidden="true"><use href="#pltIcon"/></svg>
+    <div class="titles">
+      <div class="brand">어게인 실험과학 수학학원</div>
+      <h1>🩹 피를 멈춰라! 혈소판 수비대</h1>
+    </div>
+    <button class="bbtn white share" id="share" aria-label="공유하기">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2476b8" stroke-width="2.6" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+      <span>공유하기</span>
+    </button>
+  </div>
+</header>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="rbcG"><stop offset="0" stop-color="#ea8c80"/><stop offset=".38" stop-color="#e2675d"/><stop offset=".72" stop-color="#d23c3b"/><stop offset="1" stop-color="#b3262b"/></radialGradient>
+    <g id="rbcIcon"><circle r="50" fill="url(#rbcG)" stroke="#a5202a" stroke-width="5"/><ellipse cx="-16" cy="-22" rx="12" ry="7" fill="#fff" opacity=".35"/></g>
+    <!-- 혈소판: 작고 납작한 연보라색 조각 -->
+    <g id="pltIcon"><path d="M-44 -6 C-40 -34 -6 -44 18 -32 C44 -20 50 6 34 26 C18 44 -12 42 -30 28 C-46 16 -46 4 -44 -6Z" fill="#c4aee6" stroke="#8a6cc0" stroke-width="6"/><circle cx="-10" cy="-6" r="7" fill="#9b7cc9"/><circle cx="12" cy="8" r="6" fill="#9b7cc9"/><circle cx="4" cy="-18" r="5" fill="#9b7cc9"/></g>
+    <g id="plt"><path d="M-12 -2 C-11 -9 -2 -12 5 -9 C12 -5 13 2 9 7 C5 12 -3 11 -8 8 C-12 4 -12 1 -12 -2Z" fill="#c4aee6" stroke="#8a6cc0" stroke-width="2"/><circle cx="-2" cy="-1" r="2.4" fill="#9b7cc9"/><circle cx="4" cy="3" r="2" fill="#9b7cc9"/></g>
+    <g id="rbc"><circle r="34" fill="url(#rbcG)" stroke="#a5202a" stroke-width="3"/><ellipse cx="-10" cy="-12" rx="9" ry="5" fill="#fff" opacity=".3"/></g>
+  </defs>
+</svg>
+
+<nav id="tabs">
+  <button class="tab on"><span class="n">1</span>🩸 피를 많이 잃으면?<span class="star">⭐</span></button>
+  <button class="tab"><span class="n">2</span>🧱 혈소판이 막아요<span class="star">⭐</span></button>
+  <button class="tab"><span class="n">3</span>🟤 딱지와 새살<span class="star">⭐</span></button>
+  <button class="tab"><span class="n">4</span>🧣 지혈대 감기<span class="star">⭐</span></button>
+  <button class="tab"><span class="n">5</span>🧩 O/X 퀴즈<span class="star">⭐</span></button>
+</nav>
+
+<main>
+<!-- 1. 피를 많이 잃으면? -->
+<section class="panel on" id="p1">
+  <div class="coach"><svg viewBox="-60 -60 120 120"><use href="#pltIcon"/></svg><div class="bubble" id="b1"></div></div>
+  <div class="stage">
+    <svg id="s1" viewBox="0 0 1600 900" role="img" aria-label="어른 몸속 피 5리터와 빠져나간 피의 양을 생수병으로 비교하는 그림">
+      <rect width="1600" height="900" fill="#f4fbff"/>
+      <!-- 몸 윤곽 (얼굴 없음) -->
+      <g transform="translate(-180 20)">
+        <g stroke-linecap="round" fill="none">
+          <g stroke="#f0b98a"><path d="M680 270 L580 560" stroke-width="96"/><path d="M920 270 L1020 560" stroke-width="96"/><path d="M740 560 L725 830" stroke-width="112"/><path d="M860 560 L875 830" stroke-width="112"/><path d="M800 120 V230" stroke-width="80"/></g>
+          <g stroke="#ffe3c4"><path d="M680 270 L580 560" stroke-width="84"/><path d="M920 270 L1020 560" stroke-width="84"/><path d="M740 560 L725 830" stroke-width="100"/><path d="M860 560 L875 830" stroke-width="100"/><path d="M800 120 V230" stroke-width="68"/></g>
+        </g>
+        <rect x="660" y="220" width="280" height="370" rx="80" fill="#ffe3c4" stroke="#f0b98a" stroke-width="6"/>
+        <circle cx="800" cy="112" r="80" fill="#ffe3c4" stroke="#f0b98a" stroke-width="6"/>
+        <path id="loop1" d="M800 112 C860 200 880 330 860 470 C840 560 760 560 740 470 C720 330 740 200 800 112Z" fill="none" stroke="#d9363e" stroke-width="10" opacity=".55"/>
+        <g id="dots1"></g>
+        <ellipse id="brain1" cx="800" cy="100" rx="44" ry="32" fill="#ffc7d1" stroke="#e98aa0" stroke-width="5"/>
+        <text x="800" y="112" text-anchor="middle" font-family="Jua" font-size="30" fill="#b94a66">뇌</text>
+        <path id="heart1" d="M820 410 C760 370 770 320 800 325 C812 326 818 335 820 342 C822 335 828 326 840 325 C870 320 880 370 820 410Z" fill="#d9363e" stroke="#a3212b" stroke-width="5"/>
+        <text x="905" y="380" font-family="Jua" font-size="30" fill="#a3212b">심장</text>
+        <circle id="warnB" class="ring" cx="800" cy="100" r="70" style="display:none"/>
+        <circle id="warnH" class="ring" cx="820" cy="365" r="70" style="display:none"/>
+      </g>
+      <!-- 몸속 피 (큰 생수병 두 병 반) -->
+      <g font-family="Jua" text-anchor="middle">
+        <text x="1010" y="120" font-size="44" fill="#a3212b">몸속 피 (어른 약 5리터)</text>
+        <g id="inB"></g>
+        <text x="1010" y="770" font-size="38" fill="#6c7a8a">큰 생수병 한 병 = 2리터</text>
+        <text x="1410" y="120" font-size="44" fill="#c85f00">빠져나간 피</text>
+        <g id="outB"></g>
+        <text id="outL" x="1410" y="690" font-size="50" fill="#c85f00">0리터</text>
+      </g>
+    </svg>
+    <div class="cap" id="cap1" hidden></div>
+  </div>
+  <div class="slide"><span>조금</span><input type="range" id="r1" min="0" max="20" value="0" aria-label="빠져나간 피의 양"><span>많이</span></div>
+  <div class="row"><button class="bbtn white" id="re1" hidden>🔁 처음부터</button></div>
+  <div class="card" id="c1"><span class="big">그래서 다쳤을 때 가장 먼저 할 일은 피를 멈추는 것이에요.</span>무릎이 까져 나는 피는 조금이라, 몸이 다시 만들어 채워요.</div>
+  <div class="words" id="w1">
+    <div><b>지혈</b>피가 나는 것을 멈추게 하는 것</div>
+    <div class="d"><b>적혈구</b>피 속 적혈구는 온몸에 산소를 날라요. 피를 많이 흘리면 산소를 나를 피가 모자라요.</div>
+  </div>
+</section>
+
+<!-- 2. 혈소판이 막아요 -->
+<section class="panel" id="p2">
+  <div class="coach"><svg viewBox="-60 -60 120 120"><use href="#pltIcon"/></svg><div class="bubble" id="b2"></div></div>
+  <div class="stage">
+    <svg id="s2" viewBox="0 0 1600 900" role="img" aria-label="다친 혈관의 틈을 혈소판이 막고, 섬유소 그물에 적혈구가 걸려 피가 굳고 딱지가 되는 그림">
+      <rect width="1600" height="900" fill="#fff5ef"/>
+      <rect y="0" width="1600" height="150" fill="#ffe3c4"/>
+      <text x="40" y="95" font-family="Jua" font-size="34" fill="#c08a5a">혈관 밖 (살)</text>
+      <!-- 혈관: 위쪽 벽 · 속 · 아래쪽 벽 (아래쪽 벽 바깥 = 피부 쪽) -->
+      <rect y="150" width="1600" height="60" fill="#f2a7a7"/>
+      <rect y="210" width="1600" height="420" fill="#fff4d6"/>
+      <path d="M0 630 H740 L760 690 H0Z M1600 630 H860 L840 690 H1600Z" fill="#f2a7a7"/>
+      <rect y="690" width="1600" height="210" fill="#ffe3c4"/>
+      <text x="40" y="860" font-family="Jua" font-size="34" fill="#c08a5a">피부 쪽</text>
+      <text x="1560" y="260" text-anchor="end" font-family="Jua" font-size="34" fill="#c9a36b">혈관 속 ▶ 피가 흘러요</text>
+      <g id="leak2"><circle cx="800" cy="740" r="14" fill="#d9363e"/><circle cx="790" cy="785" r="8" fill="#d9363e"/></g>
+      <g id="net2"></g>
+      <g id="stuck2"></g>
+      <g id="scab2" opacity="0"><path d="M700 690 Q720 655 760 650 L840 650 Q880 655 900 690 Q860 712 800 714 Q740 712 700 690Z" fill="#8a5a3a" stroke="#6b4329" stroke-width="5"/><text x="800" y="790" text-anchor="middle" font-family="Jua" font-size="40" fill="#6b4329">딱지</text></g>
+      <g id="flow2"></g>
+      <circle id="ring2" class="ring" cx="800" cy="660" r="90"/>
+      <text id="tear2" x="800" y="560" text-anchor="middle" font-family="Jua" font-size="34" fill="#c85f00">다친 곳 ▼</text>
+    </svg>
+    <div class="cap" id="cap2" hidden></div>
+  </div>
+  <div class="pills" id="cnt2"></div>
+  <div class="row"><button class="bbtn org pulse" id="go2" hidden></button><button class="bbtn white" id="re2" hidden>🔁 처음부터</button></div>
+  <div class="card" id="c2"><span class="big">작은 상처의 피는 이렇게 멈춰요!</span>
+    <div class="flow"><span>혈관이 다쳐요</span>→<span>혈소판이 모여 붙어요</span>→<span>섬유소 그물이 적혈구를 잡아 피가 굳어요</span>→<span>굳은 피가 말라 딱지가 돼요</span></div>
+    피가 멈추는 것은 공기에 말라서가 아니라, 혈소판이 모여 구멍을 막기 때문이에요.</div>
+  <div class="words" id="w2">
+    <div><b>혈소판</b>다친 곳에 모여 피를 멈추게 하는 아주 작은 혈구</div>
+    <div class="d"><b>크기</b>혈소판은 적혈구보다 훨씬 작은, 가장 작은 혈구예요.</div>
+  </div>
+</section>
+
+<!-- 3. 딱지와 새살 -->
+<section class="panel" id="p3">
+  <div class="coach"><svg viewBox="-60 -60 120 120"><use href="#pltIcon"/></svg><div class="bubble" id="b3"></div></div>
+  <div class="stage">
+    <svg id="s3" viewBox="0 0 1600 900" role="img" aria-label="무릎의 작은 상처를 잘라 본 그림. 딱지 아래에서 새살이 차오르는 모습">
+      <rect width="1600" height="900" fill="#f4fbff"/>
+      <text x="800" y="90" text-anchor="middle" font-family="Jua" font-size="38" fill="#6c7a8a">무릎의 작은 상처를 잘라서 옆에서 본 모습</text>
+      <!-- 피부 (가운데 움푹 = 상처) -->
+      <path d="M0 420 H560 Q600 420 620 470 L660 600 Q680 640 720 640 H880 Q920 640 940 600 L980 470 Q1000 420 1040 420 H1600 V900 H0Z" fill="#f6c9a5"/>
+      <path d="M0 420 H560 Q600 420 620 470 L660 600 Q680 640 720 640 H880 Q920 640 940 600 L980 470 Q1000 420 1040 420 H1600" fill="none" stroke="#e3a37a" stroke-width="8"/>
+      <rect x="0" y="420" width="1600" height="24" fill="#ffd9bd" opacity=".6"/>
+      <!-- 새살 -->
+      <clipPath id="pitClip"><path d="M560 420 Q600 420 620 470 L660 600 Q680 640 720 640 H880 Q920 640 940 600 L980 470 Q1000 420 1040 420Z"/></clipPath>
+      <g clip-path="url(#pitClip)"><rect id="new3" x="540" y="640" width="520" height="0" fill="#ffb3c1"/></g>
+      <text id="newL" x="800" y="610" text-anchor="middle" font-family="Jua" font-size="36" fill="#b94a66" opacity="0">새살</text>
+      <g id="blood3" style="display:none"><circle cx="800" cy="610" r="18" fill="#d9363e"/></g>
+      <!-- 딱지 -->
+      <g id="scab3"><path d="M590 430 Q600 395 660 390 H940 Q1000 395 1010 430 Q980 470 930 476 H670 Q620 470 590 430Z" fill="#8a5a3a" stroke="#6b4329" stroke-width="6"/>
+        <ellipse cx="700" cy="415" rx="40" ry="8" fill="#a8774f"/><text x="800" y="360" text-anchor="middle" font-family="Jua" font-size="40" fill="#6b4329">딱지</text></g>
+      <g id="dust3"></g>
+      <text x="1300" y="520" text-anchor="middle" font-family="Jua" font-size="32" fill="#c08a5a">피부</text>
+    </svg>
+    <div class="cap" id="cap3" hidden></div>
+  </div>
+  <div class="slide"><span>다친 날</span><input type="range" id="r3" min="0" max="100" value="0" aria-label="날짜가 지나요"><span>며칠 뒤</span></div>
+  <div class="row"><button class="bbtn org" id="pick3">✋ 딱지 억지로 떼기</button><button class="bbtn white" id="re3" hidden>🔁 처음부터</button></div>
+  <div class="card" id="c3"><span class="big">새살이 다 차면 덮개는 저절로 떨어져요.</span>딱지를 억지로 떼면 아물던 상처가 다시 벌어져 피가 나요.</div>
+  <div class="words" id="w3">
+    <div><b>딱지</b>상처에서 굳은 피가 말라 생긴 단단한 덮개</div>
+    <div class="d"><b>하는 일</b>단단한 덮개는 상처를 덮어, 먼지와 세균이 들어오지 못하게 막아요.</div>
+  </div>
+</section>
+
+<!-- 4. 지혈대 감기 -->
+<section class="panel" id="p4">
+  <div class="coach"><svg viewBox="-60 -60 120 120"><use href="#pltIcon"/></svg><div class="bubble" id="b4"></div></div>
+  <div class="stage">
+    <svg id="s4" viewBox="0 0 1600 900" role="img" aria-label="거즈로 덮은 팔의 상처보다 심장에 가까운 쪽에 삼각건 지혈대를 감는 그림">
+      <rect width="1600" height="900" fill="#f4fbff"/>
+      <!-- 심장 쪽 -->
+      <path d="M120 470 C60 430 70 380 100 385 C112 386 118 395 120 402 C122 395 128 386 140 385 C170 380 180 430 120 470Z" fill="#d9363e" stroke="#a3212b" stroke-width="5"/>
+      <text x="120" y="530" text-anchor="middle" font-family="Jua" font-size="32" fill="#a3212b">심장 쪽</text>
+      <!-- 팔 (얼굴 · 몸 없음) -->
+      <g stroke-linecap="round" fill="none">
+        <path d="M300 470 H640 L1260 500" stroke="#f0b98a" stroke-width="150"/>
+        <path d="M300 470 H640 L1260 500" stroke="#ffe3c4" stroke-width="136"/>
+      </g>
+      <ellipse cx="1340" cy="502" rx="110" ry="80" fill="#ffe3c4" stroke="#f0b98a" stroke-width="6"/>
+      <text x="1340" y="640" text-anchor="middle" font-family="Jua" font-size="32" fill="#c08a5a">손 쪽</text>
+      <text x="640" y="610" text-anchor="middle" font-family="Jua" font-size="28" fill="#c08a5a">팔꿈치</text>
+      <!-- 혈관 + 흐름 -->
+      <path id="vesA" d="M150 455 H640 L860 465" fill="none" stroke="#d9363e" stroke-width="12" stroke-dasharray="26 22" opacity=".8"/>
+      <path id="vesB" d="M860 465 L1300 486" fill="none" stroke="#d9363e" stroke-width="12" stroke-dasharray="26 22" opacity=".8"/>
+      <!-- 거즈로 덮은 상처 -->
+      <g><rect x="1010" y="420" width="120" height="110" rx="12" fill="#fff" stroke="#c9d6e2" stroke-width="5"/><path d="M1020 450 H1120 M1020 475 H1120 M1020 500 H1120" stroke="#e6edf3" stroke-width="4"/>
+        <text x="1070" y="395" text-anchor="middle" font-family="Jua" font-size="30" fill="#6c7a8a">상처(거즈)</text></g>
+      <!-- 놓을 자리 -->
+      <g id="zones4">
+        <rect id="zH" x="790" y="380" width="150" height="190" rx="24" fill="#ff8a1f" opacity=".12" stroke="#ff8a1f" stroke-width="5" stroke-dasharray="16 12"/>
+        <rect id="zF" x="1150" y="390" width="110" height="190" rx="24" fill="#ff8a1f" opacity=".12" stroke="#ff8a1f" stroke-width="5" stroke-dasharray="16 12"/>
+      </g>
+      <!-- 감은 지혈대 -->
+      <g id="band4" style="display:none">
+        <rect id="bandR" x="-36" y="-92" width="72" height="184" rx="14" fill="#fff" stroke="#9fb3c6" stroke-width="5"/>
+        <path id="knot4" d="M-30 -100 Q0 -140 30 -100 Q0 -120 -30 -100Z" fill="#fff" stroke="#9fb3c6" stroke-width="5" style="display:none"/>
+        <g id="pen4" style="display:none" class="tapme"><circle r="110" cy="-110" fill="transparent"/><g id="penR" transform="translate(0 -112)"><rect x="-90" y="-11" width="180" height="22" rx="11" fill="#3a9ae0" stroke="#2476b8" stroke-width="4"/><rect x="70" y="-11" width="20" height="22" rx="6" fill="#2476b8"/></g></g>
+        <g id="time4" style="display:none"><rect x="-120" y="108" width="240" height="64" rx="16" fill="#fff" stroke="#33414f" stroke-width="4"/><text id="time4t" y="152" text-anchor="middle" font-family="Jua" font-size="38" fill="#33414f"></text></g>
+      </g>
+      <!-- 삼각건 (끌어서 놓기) -->
+      <g id="src4" class="tapme" transform="translate(300 170)">
+        <rect x="-160" y="-80" width="320" height="160" fill="transparent"/>
+        <rect x="-140" y="-26" width="280" height="52" rx="12" fill="#fff" stroke="#9fb3c6" stroke-width="5"/>
+        <path d="M-120 -10 H120 M-120 10 H120" stroke="#e1e8ef" stroke-width="4"/>
+        <text y="-44" text-anchor="middle" font-family="Jua" font-size="32" fill="#2476b8">삼각건 띠 (끌어요)</text>
+      </g>
+      <circle id="ring4" class="ring" cx="300" cy="170" r="175"/>
+      <g id="ghost4" pointer-events="none"></g>
+      <text id="arrowL" x="480" y="360" text-anchor="middle" font-family="Jua" font-size="30" fill="#a3212b">피가 흐르는 쪽 ▶</text>
+    </svg>
+    <div class="cap" id="cap4" hidden></div>
+  </div>
+  <div class="row"><button class="bbtn org pulse" id="go4" hidden></button><button class="bbtn white" id="re4" hidden>🔁 처음부터</button></div>
+  <div class="card" id="c4"><span class="big">지혈대는 상처 바로 위가 아니라, 상처보다 심장에 가까운 쪽에 감아요.</span>지혈대를 오래 감으면 그 아래로 산소가 가지 못해요. 그래서 구급대원은 지혈대를 감은 시각을 꼭 적어요.</div>
+  <div class="words" id="w4">
+    <div><b>지혈대</b>팔이나 다리를 꽉 묶어 피를 멈추게 하는 띠</div>
+    <div class="d"><b>큰 상처</b>큰 사고로 팔이나 다리에서 피가 많이 나면, 혈소판만으로는 막을 수 없어요. 이때 지혈대를 써요.</div>
+    <div class="d"><b>작은 상처</b>작은 상처에서 피가 계속 나면, 깨끗한 거즈로 꾹 누르고 어른에게 알려요.</div>
+    <div><b>약속</b>지혈대 연습은 선생님과 함께할 때만 해요.</div>
+  </div>
+</section>
+
+<!-- 5. O/X 퀴즈 -->
+<section class="panel" id="p5">
+  <div class="coach"><svg viewBox="-60 -60 120 120"><use href="#pltIcon"/></svg><div class="bubble" id="b5">피를 멈추는 방법을 떠올려 봐요.<br>맞으면 <b class="c">O</b>, 틀리면 <b>X</b>를 꾹 눌러요!</div></div>
+  <div class="dots" id="dots5"></div>
+  <div class="qbox" id="q5"></div>
+  <div class="ox"><button class="oxb o" id="o5" aria-label="맞아요">O</button><button class="oxb x" id="x5" aria-label="틀려요">X</button></div>
+  <div class="qfb" id="fb5"></div>
+  <div class="row"><button class="bbtn org pulse" id="nx5" hidden>다음 문제 ▶</button><button class="bbtn white" id="re5" hidden>🔁 다시 하기</button></div>
+  <div class="card" id="c5"><span class="big">와, 지혈 박사가 되었어요!</span>다친 곳에 모여 피를 멈추게 하는 아주 작은 혈구를 혈소판이라고 해요!</div>
+</section>
+</main>
+
+<footer>
+  <div class="brand">어게인 실험과학 수학학원</div>
+  <div class="tel">교육문의 010.2976.5774</div>
+</footer>
+<div class="toast" id="toast"></div>
+<canvas id="fx"></canvas>
+
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const rand = (a, b) => a + Math.random() * (b - a);
+const lerp = (a, b, t) => a + (b - a) * t;
+const show = (el, on) => el.style.display = on ? '' : 'none';
+const NS = 'http://www.w3.org/2000/svg';
+
+/* ---------- 소리 ---------- */
+let ac;
+const audio = () => { ac = ac || new (window.AudioContext || window.webkitAudioContext)(); if (ac.state === 'suspended') ac.resume(); return ac; };
+function tone(f, d = .15, type = 'sine', at = 0, v = .18, f2) {
+  try {
+    const a = audio(), t = a.currentTime + at, o = a.createOscillator(), g = a.createGain();
+    o.type = type; o.frequency.setValueAtTime(f, t); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + d);
+    g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.001, t + d);
+    o.connect(g).connect(a.destination); o.start(t); o.stop(t + d);
+  } catch (e) {}
+}
+const sfx = {
+  pop: () => { tone(520, .09, 'triangle'); tone(780, .1, 'triangle', .06); },
+  good: () => [523, 659, 784, 1047].forEach((f, i) => tone(f, .25, 'triangle', i * .09)),
+  win: () => [523, 659, 784, 1047, 784, 1047, 1319].forEach((f, i) => tone(f, .3, 'triangle', i * .1)),
+  bad: () => { tone(300, .18, 'triangle', 0, .12); tone(220, .28, 'triangle', .15, .12); },
+  beat: () => { tone(90, .16, 'sine', 0, .35); tone(80, .18, 'sine', .22, .3); },
+  zoom: () => tone(300, .35, 'sine', 0, .14, 900),
+  whir: s => tone(200 + s * 260, .12, 'sawtooth', 0, .04)
+};
+
+/* ---------- 반짝이 · 꽃가루 ---------- */
+const cv = $('#fx'), cx = cv.getContext('2d');
+let parts = [], running = false;
+const COLORS = ['#ff8a1f', '#3a9ae0', '#ffd666', '#7fd6b0', '#ffffff', '#ff6b6b'];
+function resizeFx() { cv.width = innerWidth * devicePixelRatio; cv.height = innerHeight * devicePixelRatio; }
+addEventListener('resize', resizeFx); resizeFx();
+function sparkle(x, y, n = 22) {
+  for (let i = 0; i < n; i++) {
+    const a = Math.random() * 6.28, sp = rand(3, 8);
+    parts.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 2, r: 0, vr: .2, s: rand(7, 12), c: COLORS[i % 4], life: 50, star: true });
+  }
+  kick();
+}
+function confetti() {
+  for (let i = 0; i < 140; i++) parts.push({ x: rand(0, innerWidth), y: rand(-200, -10), vx: rand(-1.5, 1.5), vy: rand(1, 4), r: rand(0, 6), vr: rand(-.2, .2), s: rand(6, 11), c: COLORS[i % 6], life: 200, star: false });
+  kick();
+}
+function kick() { if (!running) { running = true; requestAnimationFrame(fxLoop); } }
+function fxLoop() {
+  const k = devicePixelRatio; cx.clearRect(0, 0, cv.width, cv.height);
+  parts = parts.filter(p => p.life-- > 0 && p.y < innerHeight + 40);
+  for (const p of parts) {
+    p.vy += p.star ? .14 : .03; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+    cx.save(); cx.translate(p.x * k, p.y * k); cx.rotate(p.r); cx.globalAlpha = Math.min(1, p.life / 20); cx.fillStyle = p.c;
+    if (p.star) { cx.beginPath(); for (let i = 0; i < 10; i++) { const rr = (i % 2 ? p.s / 2.4 : p.s) * k, a = i * Math.PI / 5; cx.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); } cx.fill(); }
+    else { cx.fillRect(-p.s * k / 2, -p.s * k / 4, p.s * k, p.s * k / 2); }
+    cx.restore();
+  }
+  if (parts.length) requestAnimationFrame(fxLoop); else { running = false; cx.clearRect(0, 0, cv.width, cv.height); }
+}
+// 보상: 혈소판과 적혈구가 둥실둥실 날아오름
+const FLY = i => i % 3 === 2
+  ? `<svg viewBox="-60 -60 120 120"><use href="#pltIcon"/></svg>`
+  : `<svg viewBox="-60 -60 120 120"><use href="#rbcIcon"/></svg>`;
+function celebrate() {
+  sfx.win(); confetti();
+  for (let i = 0; i < 8; i++) {
+    const b = document.createElement('div'); b.className = 'fly';
+    b.style.left = rand(4, 88) + 'vw';
+    b.style.animationDuration = rand(3.2, 5) + 's'; b.style.animationDelay = rand(0, 1.2) + 's';
+    b.innerHTML = FLY(i);
+    b.addEventListener('animationend', e => e.target === b && b.remove()); document.body.appendChild(b);
+  }
+}
+
+/* ---------- 공통 ---------- */
+function coach(id, html) { const el = $(id); el.classList.remove('new'); void el.offsetWidth; el.classList.add('new'); el.innerHTML = html; }
+function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('on'), 2000); }
+function showCard(id) { const c = $(id); c.classList.remove('on'); void c.offsetWidth; c.classList.add('on'); setTimeout(() => c.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 300); }
+function setCap(el, t, cls) { el.hidden = !t; el.textContent = t; el.className = 'cap' + (cls ? ' ' + cls : ''); }
+const tabs = $$('.tab'), panels = $$('.panel');
+function finish(i, card) { showCard(card); if (!tabs[i].classList.contains('done')) { tabs[i].classList.add('done'); celebrate(); } else sfx.good(); }
+function openTab(i) {
+  tabs.forEach((x, j) => x.classList.toggle('on', j === i));
+  panels.forEach((p, j) => p.classList.toggle('on', j === i));
+}
+tabs.forEach((t, i) => t.onclick = () => { openTab(i); sfx.pop(); });
+// 주소 끝에 #1~#5 를 붙이면 그 탭이 바로 열림
+{ const h = +location.hash.slice(1); if (h >= 1 && h <= 5) openTab(h - 1); }
+$('#share').onclick = async () => {
+  const url = location.href;
+  if (navigator.share) { try { await navigator.share({ title: '피를 멈춰라! 혈소판 수비대', text: '어게인 실험과학 수학학원 · 지혈과 혈소판 놀이', url }); return; } catch (e) { if (e.name === 'AbortError') return; } }
+  try { await navigator.clipboard.writeText(url); }
+  catch (e) { const ta = document.createElement('textarea'); ta.value = url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
+  toast('주소가 복사됐어요');
+};
+function svgPt(svg, e) { const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY; return p.matrixTransform(svg.getScreenCTM().inverse()); }
+const loops = [];
+const loop = (i, fn) => loops.push([i, fn]);
+let lastT = performance.now();
+requestAnimationFrame(function frame(now) {
+  const dt = Math.min(40, now - lastT); lastT = now;
+  for (const [i, fn] of loops) if (panels[i].classList.contains('on')) fn(dt, now);
+  requestAnimationFrame(frame);
+});
+function tween(ms, fn, done) {
+  const t0 = performance.now();
+  requestAnimationFrame(function f(now) { const q = Math.min(1, (now - t0) / ms); fn(1 - Math.pow(1 - q, 3)); if (q < 1) requestAnimationFrame(f); else done && done(); });
+}
+const wait = ms => new Promise(r => setTimeout(r, ms));
+
+const dist = (a, b, c, d) => Math.hypot(a - c, b - d);
+const use = (id, x, y, s = 1, rot = 0) => `<use href="#${id}" transform="translate(${x} ${y}) rotate(${rot}) scale(${s})"/>`;
+
+/* =========== 1. 피를 많이 잃으면? =========== */
+(() => {
+  const r = $('#r1'), inB = $('#inB'), outB = $('#outB'), outL = $('#outL'), dots = $('#dots1'), path = $('#loop1'), cap = $('#cap1');
+  const BX = [880, 1010, 1140], CAPA = [2, 2, 1];
+  const bottle = (cx, f, half, color) => {
+    const top = half ? 420 : 220, H = 620 - top - 12, h = H * f;
+    return `<rect x="${cx - 22}" y="${top - 70}" width="44" height="30" rx="6" fill="#2476b8"/><rect x="${cx - 30}" y="${top - 40}" width="60" height="40" rx="10" fill="#fff" stroke="#7fb4d8" stroke-width="5"/>
+      <rect x="${cx - 60}" y="${top}" width="120" height="${620 - top}" rx="30" fill="#fff" stroke="#7fb4d8" stroke-width="6"/>
+      <rect x="${cx - 53}" y="${614 - h}" width="106" height="${h}" rx="24" fill="${color}"/>`;
+  };
+  const N = 10, P = [...Array(N)].map((_, i) => { const g = document.createElementNS(NS, 'circle'); g.setAttribute('r', 13); g.setAttribute('fill', '#d23c3b'); g.setAttribute('stroke', '#a5202a'); g.setAttribute('stroke-width', 3); dots.appendChild(g); return i / N; });
+  const L = path.getTotalLength();
+  let v = 0, done = false;
+  function draw() {
+    let left = 5 - v;
+    inB.innerHTML = BX.map((x, i) => { const has = Math.max(0, Math.min(CAPA[i], left - CAPA.slice(0, i).reduce((a, b) => a + b, 0))); return bottle(x, has / CAPA[i], i === 2, '#d23c3b') + `<text x="${x}" y="675" font-size="40" fill="#6c7a8a">${CAPA[i]}리터</text>`; }).join('');
+    outB.innerHTML = bottle(1410, v / 2, false, v >= 2 ? '#ff8a1f' : '#e88d88');
+    outL.textContent = (v % 1 ? v.toFixed(1) : v) + '리터';
+  }
+  loop(0, dt => {
+    const show = Math.round(N * (5 - v) / 5);
+    [...dots.children].forEach((c, i) => {
+      P[i] = (P[i] + dt / 9000) % 1;
+      const p = path.getPointAtLength(P[i] * L);
+      c.setAttribute('cx', p.x); c.setAttribute('cy', p.y); c.style.display = i < show ? '' : 'none';
+    });
+  });
+  r.oninput = () => {
+    v = +r.value / 10; draw(); audio();
+    const danger = v >= 2;
+    show($('#warnB'), danger); show($('#warnH'), danger);
+    if (v === 0) { coach('#b1', '피 속 <b>적혈구</b>는 온몸에 산소를 날라요.<br>아래 막대를 밀어, 몸 밖으로 피가 빠져나가면 어떻게 되는지 봐요.'); setCap(cap, ''); }
+    else if (v <= .4) { coach('#b1', '무릎이 까져 나는 피는 <b class="c">조금</b>이라, 몸이 다시 만들어 채워요.<br>막대를 더 밀어 봐요.'); setCap(cap, '아직은 괜찮아요', 'cold'); }
+    else if (!danger) { coach('#b1', '피가 점점 많이 빠져나가요.<br>피를 많이 흘리면 <b>산소를 나를 피가 모자라요.</b>'); setCap(cap, '산소를 나를 피가 줄어들어요'); }
+    else {
+      coach('#b1', '어른 몸에서 <b>큰 생수병 한 병(2리터)</b>만큼 피가 빠져나가면,<br>뇌와 심장에도 산소가 모자라 생명이 위험해요.');
+      setCap(cap, '생명이 위험해요!', 'hot');
+      if (!done) { done = true; sfx.bad(); setTimeout(() => { finish(0, '#c1'); $('#w1').classList.add('on'); $('#re1').hidden = false; }, 700); }
+    }
+  };
+  $('#re1').onclick = () => { r.value = 0; done = false; r.oninput(); $('#c1').classList.remove('on'); $('#w1').classList.remove('on'); $('#re1').hidden = true; sfx.pop(); };
+  draw(); r.oninput();
+})();
+
+/* =========== 2. 혈소판이 막아요 =========== */
+(() => {
+  const svg = $('#s2'), flow = $('#flow2'), leak = $('#leak2'), net = $('#net2'), scab = $('#scab2'), go = $('#go2'), re = $('#re2'), cap = $('#cap2'), cnt = $('#cnt2'), ring = $('#ring2');
+  const PLUG = [[772, 640], [800, 638], [828, 640], [784, 662], [816, 662], [800, 684]];
+  const NETS = [[752, 600], [848, 600], [800, 590], [800, 618]];
+  let C = [], step, nP, nR;
+  function make() {
+    flow.innerHTML = ''; C = [];
+    const add = (k, x, y) => {
+      const g = document.createElementNS(NS, 'g'); g.classList.add('tapme');
+      g.innerHTML = k === 'p' ? '<circle r="44" fill="transparent"/><use href="#plt" transform="scale(1.15)"/>' : '<circle r="40" fill="transparent"/><use href="#rbc"/>';
+      flow.appendChild(g); const c = { k, x, y, el: g, st: 'flow', sp: rand(.05, .09) }; g.onpointerdown = e => tap(c, e); C.push(c);
+    };
+    for (let i = 0; i < 11; i++) add('r', i * 150 + rand(-30, 30), rand(270, 570));
+    for (let i = 0; i < 16; i++) add('p', i * 100 + rand(-20, 20), rand(250, 590));
+  }
+  const put = c => c.el.setAttribute('transform', `translate(${c.x} ${c.y}) scale(${c.s || 1})`);
+  function fly(c, [x, y], s) {
+    c.st = 'fly'; const x0 = c.x, y0 = c.y;
+    tween(600, e => { c.x = lerp(x0, x, e); c.y = lerp(y0, y, e); c.s = lerp(1, s, e); put(c); }, () => c.st = 'stuck');
+  }
+  function pills() {
+    cnt.innerHTML = `<span class="${nP >= 6 ? 'ok' : ''}">혈소판 ${nP}/6</span><span class="${step >= 2 ? 'ok' : ''}">섬유소 그물 ${step >= 2 ? '✓' : '—'}</span><span class="${nR >= 4 ? 'ok' : ''}">적혈구 ${nR}/4</span><span class="${step >= 4 ? 'ok' : ''}">딱지 ${step >= 4 ? '✓' : '—'}</span>`;
+  }
+  function tap(c, e) {
+    if (c.st !== 'flow') return; audio();
+    if (step === 1 && c.k === 'p') {
+      fly(c, PLUG[nP], 1.3); nP++; sfx.pop(); sparkle(e.clientX, e.clientY, 8);
+      leak.setAttribute('opacity', 1 - nP / 6); pills();
+      if (nP < 6) { coach('#b2', `혈소판이 다친 곳에 모여 <b>끈끈하게</b> 달라붙어요! (${nP}/6)<br>작은 연보라색 조각을 더 눌러요.`); return; }
+      step = 1.5; setCap(cap, '혈소판이 모여 구멍을 막았어요!', 'cold');
+      coach('#b2', '혈소판이 서로 달라붙어 혈관에 난 <b>구멍을 막았어요!</b><br>이제 섬유소 그물을 쳐요.');
+      go.textContent = '🕸 섬유소 그물 치기'; go.hidden = false; sfx.good(); return;
+    }
+    if (step === 3 && c.k === 'r') {
+      fly(c, NETS[nR], .7); nR++; sfx.pop(); sparkle(e.clientX, e.clientY, 8); pills();
+      if (nR < 4) { coach('#b2', `그물에 <b>적혈구</b>가 걸렸어요! (${nR}/4)<br>빨간 적혈구를 더 눌러요.`); return; }
+      step = 3.5; setCap(cap, '그물에 적혈구가 걸려 피가 굳어요', 'hot');
+      coach('#b2', '섬유소 그물이 적혈구를 잡아 <b>피가 굳었어요!</b><br>시간이 지나면 어떻게 될까요?');
+      go.textContent = '⏳ 시간이 지나면?'; go.hidden = false; sfx.good(); return;
+    }
+    sfx.bad();
+    if (step === 1) coach('#b2', '지금은 <b>혈소판</b> 차례예요!<br>적혈구보다 훨씬 작은 <b>연보라색 조각</b>을 눌러요.');
+    else if (step === 3) coach('#b2', '이번에는 빨간 <b>적혈구</b>를 눌러 그물로 데려가요.');
+  }
+  go.onclick = () => {
+    go.hidden = true; audio();
+    if (step === 1.5) {
+      step = 2; sfx.zoom(); pills();
+      const L = [[700, 590, 900, 700], [900, 590, 700, 700], [720, 620, 880, 620], [730, 660, 870, 660], [760, 580, 760, 705], [840, 580, 840, 705], [700, 640, 900, 690], [700, 690, 900, 640]];
+      net.innerHTML = L.map(([a, b, c, d]) => `<path d="M${a} ${b} L${c} ${d}" stroke="#e8c84a" stroke-width="5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>`).join('');
+      tween(1200, e => [...net.children].forEach(p => p.setAttribute('stroke-dashoffset', 1 - e)), () => {
+        step = 3; setCap(cap, '섬유소 그물이 생겨요', 'cold');
+        coach('#b2', '가는 실, <b>섬유소</b>가 그물을 쳤어요!<br>흘러가는 빨간 <b>적혈구</b>를 눌러 그물에 걸어 봐요. (0/4)');
+      });
+    } else if (step === 3.5) {
+      step = 4; pills(); show(ring, false); $('#tear2').textContent = '';
+      tween(1600, e => scab.setAttribute('opacity', e), () => {
+        setCap(cap, '굳은 피가 말라 딱지가 돼요', 'hot');
+        coach('#b2', '굳은 피가 말라 <b>딱지</b>가 되었어요!<br>피가 멈추는 것은 공기에 말라서가 아니라, 혈소판이 모여 구멍을 막기 때문이에요.');
+        finish(1, '#c2'); $('#w2').classList.add('on'); re.hidden = false;
+      });
+    }
+  };
+  loop(1, dt => {
+    for (const c of C) {
+      if (c.st !== 'flow') continue;
+      c.x += c.sp * dt; if (c.x > 1660) { c.x = -60; c.y = rand(c.k === 'p' ? 250 : 270, c.k === 'p' ? 590 : 570); }
+      put(c);
+    }
+  });
+  re.onclick = () => {
+    step = 1; nP = nR = 0; make(); net.innerHTML = ''; scab.setAttribute('opacity', 0); leak.setAttribute('opacity', 1); show(ring, true); $('#tear2').textContent = '다친 곳 ▼';
+    go.hidden = true; re.hidden = true; setCap(cap, ''); pills(); $('#c2').classList.remove('on'); $('#w2').classList.remove('on'); sfx.pop();
+    coach('#b2', '넘어져 혈관이 다치면 피가 밖으로 새어 나와요.<br>흘러가는 <b>혈소판</b>(작은 연보라색 조각)을 눌러 다친 곳으로 보내요!');
+  };
+  re.onclick();
+})();
+
+/* =========== 3. 딱지와 새살 =========== */
+(() => {
+  const r = $('#r3'), nw = $('#new3'), nl = $('#newL'), sc = $('#scab3'), bl = $('#blood3'), pick = $('#pick3'), re = $('#re3'), cap = $('#cap3');
+  let off, fin;
+  function grow(f) { nw.setAttribute('y', 640 - 210 * f); nw.setAttribute('height', 210 * f); nl.setAttribute('opacity', f > .25 ? 1 : 0); nl.setAttribute('y', 640 - 210 * f / 2 + 12); }
+  function liftScab(dx, dy, rot, ms, done) { tween(ms, e => { sc.setAttribute('transform', `translate(${dx * e} ${dy * e}) rotate(${rot * e} 800 430)`); sc.setAttribute('opacity', 1 - e); }, done); }
+  r.oninput = () => {
+    if (off || fin) return; audio();
+    const f = +r.value / 100; grow(f);
+    if (f < .3) { coach('#b3', '상처에서 굳은 피가 말라 <b>단단한 덮개</b>가 생겼어요.<br>막대를 밀어 날짜를 지나 봐요!'); setCap(cap, ''); }
+    else if (f < .95) { coach('#b3', '그동안 덮개 아래에서는 <b>새살</b>이 조금씩 차올라요.<br>덮개는 먼지와 세균이 들어오지 못하게 막아요.'); setCap(cap, '새살이 차올라요', 'cold'); }
+    else {
+      fin = true; r.disabled = true; pick.hidden = true; sfx.good();
+      liftScab(260, 380, 40, 1400, () => {
+        setCap(cap, '새살이 다 차면 딱지는 저절로 떨어져요', 'cold');
+        coach('#b3', '새살이 다 차자 덮개가 <b>저절로</b> 떨어졌어요!<br>이처럼 상처에서 굳은 피가 말라 생긴 단단한 덮개를 <b>딱지</b>라고 해요.');
+        finish(2, '#c3'); $('#w3').classList.add('on'); re.hidden = false;
+      });
+    }
+  };
+  pick.onclick = () => {
+    if (off || fin) return; off = true; audio(); sfx.bad(); r.disabled = true; pick.hidden = true;
+    const f = +r.value / 100;
+    liftScab(-120, -260, -30, 600, () => {
+      tween(500, e => grow(f * (1 - e * .7)));
+      show(bl, true); setCap(cap, '아물던 상처가 다시 벌어졌어요', 'hot');
+      coach('#b3', '딱지를 억지로 떼면 아물던 상처가 다시 벌어져 <b>피가 나요.</b><br>🔁 처음부터 눌러, 딱지가 저절로 떨어질 때까지 기다려 봐요.');
+      re.hidden = false;
+    });
+  };
+  re.onclick = () => {
+    off = fin = false; r.disabled = false; r.value = 0; grow(0); sc.removeAttribute('transform'); sc.setAttribute('opacity', 1); show(bl, false);
+    pick.hidden = false; re.hidden = true; $('#c3').classList.remove('on'); $('#w3').classList.remove('on'); sfx.pop(); r.oninput();
+  };
+  re.onclick();
+})();
+
+/* =========== 4. 지혈대 감기 =========== */
+(() => {
+  const svg = $('#s4'), src = $('#src4'), ghost = $('#ghost4'), band = $('#band4'), knot = $('#knot4'), pen = $('#pen4'), penR = $('#penR'), tm = $('#time4'),
+    zones = $('#zones4'), ring = $('#ring4'), go = $('#go4'), re = $('#re4'), cap = $('#cap4'), vA = $('#vesA'), vB = $('#vesB');
+  const HX = 865, HY = 481;
+  let step, turns, flowB, oA = 0, oB = 0, drag = null;
+  loop(3, dt => { oA -= dt * .12; oB -= dt * .12 * flowB; vA.setAttribute('stroke-dashoffset', oA); vB.setAttribute('stroke-dashoffset', oB); vB.setAttribute('opacity', .25 + .55 * flowB); });
+  const GH = '<rect x="-140" y="-26" width="280" height="52" rx="12" fill="#fff" stroke="#9fb3c6" stroke-width="5" opacity=".9"/>';
+  src.addEventListener('pointerdown', e => {
+    if (step !== 0) return; e.preventDefault(); audio(); try { svg.setPointerCapture(e.pointerId); } catch (_) {}
+    const p = svgPt(svg, e); drag = { x: p.x, y: p.y, moved: false }; ghost.innerHTML = GH; ghost.setAttribute('transform', `translate(${p.x} ${p.y})`);
+  });
+  svg.addEventListener('pointermove', e => {
+    if (!drag) return; const p = svgPt(svg, e);
+    if (dist(p.x, p.y, drag.x, drag.y) > 14) drag.moved = true;
+    ghost.setAttribute('transform', `translate(${p.x} ${p.y}) rotate(${p.x > 700 ? 90 : 0})`);
+  });
+  const up = e => {
+    if (!drag) return; const d = drag; drag = null; ghost.innerHTML = '';
+    const p = svgPt(svg, e);
+    if (!d.moved) { sfx.bad(); coach('#b4', '<b>삼각건 띠</b>를 꾹 누른 채 끌어서,<br>팔 위 <b>주황 칸</b> 두 곳 중 한 곳에 놓아요.'); return; }
+    if (Math.abs(p.x - HX) < 110 && Math.abs(p.y - HY) < 170) return place();
+    if (Math.abs(p.x - 1205) < 90 && Math.abs(p.y - 485) < 170) {
+      sfx.bad(); svg.parentNode.classList.remove('shake'); void svg.getBBox(); svg.parentNode.classList.add('shake');
+      setCap(cap, '여기는 상처보다 손 쪽이에요', 'hot');
+      coach('#b4', '피는 심장에서 나와 <b>손끝 · 발끝</b>으로 흘러가요.<br>상처보다 <b>심장에 가까운 쪽</b>에 감아야 상처로 가는 피를 막아요. 다시 해 봐요!');
+    }
+  };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+  function place() {
+    step = 1; sfx.good(); show(src, false); show(zones, false); show(ring, false); show(band, true);
+    setCap(cap, '상처보다 심장에 가까운 쪽!', 'cold');
+    coach('#b4', '맞아요! 상처보다 <b>심장에 가까운 쪽</b>에 띠를 감았어요.<br>이제 띠를 한 번 묶어요.');
+    go.textContent = '🎀 한 번 묶기'; go.hidden = false;
+  }
+  go.onclick = () => {
+    audio(); go.hidden = true;
+    if (step === 1) {
+      step = 2; show(knot, true); sfx.pop();
+      coach('#b4', '한 번 묶었어요.<br>매듭 위에 <b>펜</b>을 올리고 한 번 더 묶어요.');
+      go.textContent = '🖊 펜 올리고 한 번 더 묶기'; go.hidden = false;
+    } else if (step === 2) {
+      step = 3; show(pen, true); sfx.pop();
+      setCap(cap, '펜을 눌러 돌려요', 'cold');
+      coach('#b4', '펜을 올리고 한 번 더 묶었어요.<br><b>펜</b>을 눌러 돌려요. 상처로 가는 피가 멈출 때까지! (0/3)');
+    } else if (step === 4) {
+      step = 5; const t = new Date(), s = `${t.getHours() % 12 || 12}시 ${t.getMinutes()}분`;
+      $('#time4t').textContent = s; show(tm, true); sfx.good();
+      setCap(cap, `감은 시각 : ${s}`, 'cold');
+      coach('#b4', `삼각건에 감은 시각 <b>${s}</b>을 적었어요.<br>지혈대를 오래 감으면 그 아래로 산소가 가지 못해요. 그래서 꼭 적어요.`);
+      finish(3, '#c4'); $('#w4').classList.add('on'); re.hidden = false;
+    }
+  };
+  pen.addEventListener('pointerdown', e => {
+    if (step !== 3) return; e.preventDefault(); e.stopPropagation(); audio();
+    turns++; const a0 = (turns - 1) * 180, f0 = flowB;
+    tween(500, k => { penR.setAttribute('transform', `translate(0 -112) rotate(${a0 + 180 * k})`); flowB = lerp(f0, 1 - turns / 3, k); });
+    sfx.pop(); sparkle(e.clientX, e.clientY, 8);
+    if (turns < 3) { coach('#b4', `띠가 조여져요! 상처 쪽으로 가는 피가 줄어들어요. (${turns}/3)<br>펜을 한 번 더 눌러요.`); return; }
+    step = 4; setCap(cap, '상처로 가는 피가 멈췄어요!', 'hot');
+    coach('#b4', '띠를 꽉 조이자 <b>상처로 가는 피가 멈췄어요!</b><br>이제 감은 시각을 적어요.');
+    go.textContent = '✍ 감은 시각 적기'; go.hidden = false; sfx.good();
+  });
+  re.onclick = () => {
+    step = 0; turns = 0; flowB = 1; show(src, true); show(zones, true); show(ring, true); show(band, false); show(knot, false); show(pen, false); show(tm, false);
+    penR.setAttribute('transform', 'translate(0 -112)'); band.setAttribute('transform', `translate(${HX} ${HY}) rotate(3)`);
+    go.hidden = true; re.hidden = true; setCap(cap, ''); $('#c4').classList.remove('on'); $('#w4').classList.remove('on'); sfx.pop();
+    coach('#b4', '큰 사고로 팔에서 피가 많이 나요. 상처는 <b>거즈</b>로 덮었어요.<br><b>삼각건 띠</b>를 끌어 팔 위 주황 칸 중 알맞은 곳에 놓아요!');
+  };
+  re.onclick();
+})();
+
+/* =========== 5. O/X 퀴즈 =========== */
+(() => {
+  const Q = [
+    { q: '작은 상처의 피는 혈소판 덕분에 저절로 멈춘다.', a: true, ok: '딩동댕! 혈소판이 다친 곳에 모여 구멍을 막아요.', no: '다시 생각해 봐요! 다친 곳에 모여 구멍을 막는 혈구는 무엇이었나요?' },
+    { q: '혈소판은 적혈구보다 크다.', a: false, ok: '딩동댕! 혈소판은 적혈구보다 훨씬 작은, 가장 작은 혈구예요.', no: '다시 생각해 봐요! 연보라색 혈소판과 빨간 적혈구의 크기를 떠올려 봐요.' },
+    { q: '피가 멈추는 것은 공기에 말라서다.', a: false, ok: '딩동댕! 혈소판이 모여 구멍을 막기 때문이에요.', no: '다시 생각해 봐요! 혈관의 구멍을 막은 것은 무엇이었나요?' },
+    { q: '딱지는 억지로 떼어도 괜찮다.', a: false, ok: '딩동댕! 딱지를 억지로 떼면 아물던 상처가 다시 벌어져 피가 나요.', no: '다시 생각해 봐요! 딱지를 억지로 떼었을 때 어떻게 되었나요?' },
+    { q: '지혈대는 상처보다 심장에 가까운 쪽에 감는다.', a: true, ok: '딩동댕! 그래야 상처로 가는 피를 막을 수 있어요.', no: '다시 생각해 봐요! 피는 심장에서 나와 어디로 흘러갔나요?' }
+  ];
+  const qb = $('#q5'), fb = $('#fb5'), o = $('#o5'), x = $('#x5'), nx = $('#nx5'), re = $('#re5'), dots = $('#dots5');
+  let i = 0, lock = false;
+  dots.innerHTML = Q.map((_, j) => `<i>${j + 1}</i>`).join('');
+  function say(t, cls) { fb.className = 'qfb'; void fb.offsetWidth; fb.className = 'qfb ' + cls; fb.textContent = t; }
+  function ask() {
+    lock = false; o.disabled = x.disabled = false; o.classList.remove('pick'); x.classList.remove('pick'); nx.hidden = true;
+    qb.innerHTML = `<small>문제 ${i + 1} / ${Q.length}</small><span>${Q[i].q}</span>`;
+    fb.className = 'qfb'; fb.textContent = '맞으면 O, 틀리면 X를 눌러요!';
+    [...dots.children].forEach((d, j) => { d.className = j < i ? 'ok' : j === i ? 'now' : ''; });
+  }
+  function ans(v, btn, e) {
+    if (lock) return; audio();
+    if (v !== Q[i].a) { sfx.bad(); say(Q[i].no, 'bad'); return; }
+    lock = true; o.disabled = x.disabled = true; btn.classList.add('pick'); dots.children[i].className = 'ok';
+    say(Q[i].ok, 'good'); sparkle(e.clientX, e.clientY, 18);
+    if (i < Q.length - 1) { sfx.good(); nx.hidden = false; }
+    else { re.hidden = false; coach('#b5', '다섯 문제를 모두 풀었어요! 정말 잘했어요.<br>피가 나는 것을 멈추게 하는 것을 <b>지혈</b>이라고 해요!'); finish(4, '#c5'); }
+  }
+  o.onclick = e => ans(true, o, e); x.onclick = e => ans(false, x, e);
+  nx.onclick = () => { i++; sfx.pop(); ask(); };
+  re.onclick = () => { i = 0; re.hidden = true; $('#c5').classList.remove('on'); sfx.pop(); ask(); };
+  ask();
+})();
+</script>
+</body>
+</html>
